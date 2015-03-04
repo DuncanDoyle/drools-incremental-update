@@ -1,0 +1,25 @@
+package org.jboss.ddoyle.drools.cep.sample;
+
+import org.jboss.ddoyle.drools.demo.model.v1.SimpleEvent;
+
+declare SimpleEvent
+    @role( event )
+    @timestamp( timestamp.getTime() )
+    @expires( 2d )
+end
+
+rule "SimpleTestRule-One"
+when
+	$s:SimpleEvent()
+then
+	System.out.println("Rule One: Found simple event: " + $s);
+end
+
+rule "Bla"
+when
+	$s:SimpleEvent()
+	not SimpleEvent(this != $s, this after [0,10s] $s)
+then
+	System.out.println("Rule Two: There's no event matching the following event within 10 seconds: " + $s);
+end
+
