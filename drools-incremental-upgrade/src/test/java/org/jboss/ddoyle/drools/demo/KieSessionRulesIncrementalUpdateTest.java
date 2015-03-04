@@ -122,8 +122,7 @@ public class KieSessionRulesIncrementalUpdateTest extends CommonTestMethodBase {
 		createAndDeployKJar1.createAndDeployKJar();
 
 		KieContainer kieContainer = ks.newKieContainer(releaseId);
-		KieScanner kieScanner = ks.newKieScanner(kieContainer);
-
+		
 		KieSession kieSession = kieContainer.newKieSession();
 
 		logRulesInKieBase(kieSession.getKieBase());
@@ -142,8 +141,8 @@ public class KieSessionRulesIncrementalUpdateTest extends CommonTestMethodBase {
 		// Create and deploy the second KJar.
 		createAndDeployKJar2.createAndDeployKJar();
 
-		kieScanner.scanNow();
-
+		kieContainer.updateToVersion(releaseId);
+		
 		logRulesInKieBase(kieSession.getKieBase());
 
 		List<SimpleEvent> secondEvents = getSecondSimpleEvents();
