@@ -4,15 +4,14 @@ import org.jboss.ddoyle.drools.demo.model.v1.SimpleEvent;
 
 declare SimpleEvent
     @role( event )
-    @timestamp( timestamp.getTime() )
+    @timestamp( timestamp )
     @expires( 2d )
 end
 
 rule "SimpleTestRule-Two"
 when
-	$s:SimpleEvent()
+	$s:SimpleEvent(code=="MY_CODE")
 	not SimpleEvent(this != $s, this after [0,10s] $s)
 then
 	System.out.println("Rule Two: There's no event matching the following event within 10 seconds: " + $s);
 end
-
