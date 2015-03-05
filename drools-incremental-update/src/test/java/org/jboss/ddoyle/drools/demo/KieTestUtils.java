@@ -5,14 +5,28 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 
+import org.drools.compiler.kie.builder.impl.InternalKieModule;
+import org.drools.core.common.InternalAgenda;
+import org.drools.core.spi.Activation;
 import org.drools.core.time.impl.PseudoClockScheduler;
 import org.drools.core.util.FileManager;
 import org.jboss.ddoyle.drools.demo.model.v1.Event;
 import org.kie.api.KieBase;
+import org.kie.api.KieServices;
+import org.kie.api.builder.KieBuilder;
+import org.kie.api.builder.KieFileSystem;
+import org.kie.api.builder.KieModule;
 import org.kie.api.builder.ReleaseId;
+import org.kie.api.builder.model.KieBaseModel;
+import org.kie.api.builder.model.KieModuleModel;
+import org.kie.api.builder.model.KieSessionModel;
+import org.kie.api.conf.EqualityBehaviorOption;
+import org.kie.api.conf.EventProcessingOption;
 import org.kie.api.definition.KiePackage;
 import org.kie.api.definition.rule.Rule;
+import org.kie.api.io.Resource;
 import org.kie.api.runtime.KieSession;
+import org.kie.api.runtime.conf.ClockTypeOption;
 
 public class KieTestUtils {
 	
@@ -41,6 +55,22 @@ public class KieTestUtils {
 			}
 		}
 	}
+	
+	public static  KieFileSystem createKieFileSystemWithKProject(KieServices ks, boolean isdefault) {
+		KieModuleModel kproj = ks.newKieModuleModel();
+
+		KieBaseModel kieBaseModel1 = kproj.newKieBaseModel("KBase1").setDefault(isdefault)
+				.setEqualsBehavior(EqualityBehaviorOption.EQUALITY).setEventProcessingMode(EventProcessingOption.STREAM);
+
+		// Configure the KieSession.
+		kieBaseModel1.newKieSessionModel("KSession1").setDefault(isdefault).setType(KieSessionModel.KieSessionType.STATEFUL)
+				.setClockType(ClockTypeOption.get("pseudo"));
+
+		KieFileSystem kfs = ks.newKieFileSystem();
+		kfs.writeKModuleXML(kproj.toXML());
+		return kfs;
+	}
+	
 	
 	public static File createKPom(ReleaseId releaseId, ReleaseId... dependencies) throws IOException {
 		File pomFile = fileManager.newFile("pom.xml");
@@ -77,5 +107,60 @@ public class KieTestUtils {
         pom += "</project>";
         return pom;
     }
+	
+	
+	public static InternalKieModule createKieJar(KieServices ks, ReleaseId releaseId, Resource resource) {
+		return createKieJar(ks, releaseId, new ResourceWrapper(resource,"rules.drl"));
+	}
+	
+	public static InternalKieModule createKieJar(KieServices ks, ReleaseId releaseId, ResourceWrapper resourceWrapper) {
+		KieFileSystem kfs = createKieFileSystemWithKProject(ks, true);
+		kfs.writePomXML(getPom(releaseId));
+
+		kfs.write("src/main/resources/" + resourceWrapper.targetResourceName, resourceWrapper.getResource());
+
+		KieBuilder kieBuilder = ks.newKieBuilder(kfs);
+
+		if (!kieBuilder.buildAll().getResults().getMessages().isEmpty()) {
+			throw new IllegalStateException("Error creating KieBuilder.");
+		}
+		
+		return (InternalKieModule) kieBuilder.getKieModule();
+	}
+	
+	
+	public static class ResourceWrapper {
+		
+		private final Resource resource;
+		
+		private final String targetResourceName;
+		
+		public ResourceWrapper(Resource resource, String targetResourceName) {
+			this.resource = resource;
+			this.targetResourceName = targetResourceName;
+		}
+
+		public Resource getResource() {
+			return resource;
+		}
+
+		public String getTargetResourceName() {
+			return targetResourceName;
+		}
+	}
+	
+	
+	public static boolean assertActivations(KieSession kieSession, int expected) {
+		boolean correctNumberOfActivations = false;
+		InternalAgenda agenda = (InternalAgenda) kieSession.getAgenda();
+		Activation<?>[] activations = agenda.getActivations();
+		if (expected == activations.length) {
+			correctNumberOfActivations = true;
+		}
+		return correctNumberOfActivations;
+	}
+	
+	
+
 
 }

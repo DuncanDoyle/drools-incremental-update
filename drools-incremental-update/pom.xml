@@ -3,11 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.jboss.ddoyle.drools.kiescanner.demo</groupId>
-		<artifactId>drools-incremental-upgrade-parent</artifactId>
+		<artifactId>drools-incremental-update-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../</relativePath>
 	</parent>
-	<artifactId>drools-incremental-upgrade</artifactId>
+	<artifactId>drools-incremental-update</artifactId>
 	<name>Drools KieScanner :: Update Rules in KieSession</name>
 	<dependencies>
 		<!-- Drools dependencies. -->

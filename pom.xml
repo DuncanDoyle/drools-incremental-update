@@ -2,11 +2,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jboss.ddoyle.drools.kiescanner.demo</groupId>
-	<artifactId>drools-incremental-upgrade-parent</artifactId>
+	<artifactId>drools-incremental-update-parent</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<modules>
-		<module>drools-incremental-upgrade</module>
+		<module>drools-incremental-update</module>
 	</modules>
 	<properties>
 		<version.org.kie>6.2.0.CR4</version.org.kie>
