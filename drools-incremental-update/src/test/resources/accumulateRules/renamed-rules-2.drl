@@ -1,0 +1,25 @@
+package org.jboss.ddoyle.drools.cep.sample;
+
+import org.jboss.ddoyle.drools.demo.model.v1.SimpleEvent;
+
+declare SimpleEvent
+    @role( event )
+    @timestamp( timestamp )
+    @expires( 2d )
+end
+
+global org.jboss.ddoyle.drools.demo.KieSessionRulesIncrementalUpdateAccumulateTest.AccumulateCount accCount;
+
+rule "Bla"
+when
+	$n: Number() from accumulate($s:SimpleEvent(), count($s))
+	
+then
+	System.out.println("Rule One: Fired acc value is: " + $n );
+	accCount.setValue($n.intValue());
+end
+
+
+
+
+

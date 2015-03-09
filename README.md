@@ -32,8 +32,10 @@ We will now explain the behaviour of the incremental update of rules in a runnin
 ### Renaming Rules
 * When a rule is remamed, the rule is treated as a *new* rule and will thus refire for facts/events that were already in WorkingMemory before the update. This is tested [here](drools-incremental-update/src/test/java/org/jboss/ddoyle/drools/demo/KieSessionRulesIncrementalUpdateRenamedRulesTest.java).
 ### Deleting rules
-* When a rule is deleted, remaining rules will **not** (re)fire for facts/events that were already in Working Memory before the `KieSession` update, as demonstrated [here](https://github.com/DuncanDoyle/drools-incremental-update/blob/master/drools-incremental-update/src/test/java/org/jboss/ddoyle/drools/demo/KieSessionRulesIncrementalUpdateDeletedRulesTest.java).
-
+* When a rule is deleted, remaining rules will **not** (re)fire for facts/events that were already in Working Memory before the `KieSession` update, as demonstrated [here](drools-incremental-update/src/test/java/org/jboss/ddoyle/drools/demo/KieSessionRulesIncrementalUpdateDeletedRulesTest.java).
+### Rules with accumulates
+* The [following tests](drools-incremental-update/src/test/java/org/jboss/ddoyle/drools/demo/KieSessionRulesIncrementalUpdateAccumulateTest.java) test KieBase and KieSession update semantics with rules containing accumulates. There are some interesting conclusions:
+** 
 
 ## Interesting links:
 * [The Drools project](http://www.drools.org)
