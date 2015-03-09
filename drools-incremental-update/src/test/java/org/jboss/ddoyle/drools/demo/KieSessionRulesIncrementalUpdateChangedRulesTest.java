@@ -30,7 +30,7 @@ public class KieSessionRulesIncrementalUpdateChangedRulesTest {
 	 * @throws Exception
 	 */
 	@Test
-	public void testChangedRules1SameDrl() throws Exception {
+	public void testChangedLhsRulesAdditionalConstraintSameDrl() throws Exception {
 
 		KieServices kieServices = KieServices.Factory.get();
 		ReleaseId releaseId = kieServices.newReleaseId("org.kie", "test-added-rules-same-drl", "1.0.0");
@@ -90,7 +90,7 @@ public class KieSessionRulesIncrementalUpdateChangedRulesTest {
 	 * @throws Exception
 	 */
 	@Test
-	public void testChangedRules1DifferentDrl() throws Exception {
+	public void testChangedLhsRulesAdditionalConstraintDifferentDrl() throws Exception {
 
 		KieServices kieServices = KieServices.Factory.get();
 		ReleaseId releaseId = kieServices.newReleaseId("org.kie", "test-added-rules-same-drl", "1.0.0");
@@ -151,7 +151,7 @@ public class KieSessionRulesIncrementalUpdateChangedRulesTest {
 	 * @throws Exception
 	 */
 	@Test
-	public void testChangedRules2SameDrl() throws Exception {
+	public void testChangedLhsRulesAdditionalConstraint2SameDrl() throws Exception {
 
 		KieServices kieServices = KieServices.Factory.get();
 		ReleaseId releaseId = kieServices.newReleaseId("org.kie", "test-added-rules-same-drl", "1.0.0");
@@ -204,13 +204,13 @@ public class KieSessionRulesIncrementalUpdateChangedRulesTest {
 
 	/**
 	 * Tests updating the KieBase by changing a rule by changing the LHS in the same DRL. This is the same test as
-	 * {@link #testChangedRules2SameDrl()}, we've only changed the order of the constraints. Same result is expected, because of the change
-	 * in the LHS, the rule is marked as a new rule and will thus refire on a match.
+	 * {@link #testChangedLhsRulesAdditionalConstraint2SameDrl()}, we've only changed the order of the constraints. Same result is expected,
+	 * because of the change in the LHS, the rule is marked as a new rule and will thus refire on a match.
 	 * 
 	 * @throws Exception
 	 */
 	@Test
-	public void testChangedRules3SameDrl() throws Exception {
+	public void testChangedLhsRulesAdditionalConstraint3SameDrl() throws Exception {
 
 		KieServices kieServices = KieServices.Factory.get();
 		ReleaseId releaseId = kieServices.newReleaseId("org.kie", "test-added-rules-same-drl", "1.0.0");
@@ -269,7 +269,7 @@ public class KieSessionRulesIncrementalUpdateChangedRulesTest {
 	 * @throws Exception
 	 */
 	@Test
-	public void testChangedRules4SameDrl() throws Exception {
+	public void testChangedRhsRulesSameDrl() throws Exception {
 
 		KieServices kieServices = KieServices.Factory.get();
 		ReleaseId releaseId = kieServices.newReleaseId("org.kie", "test-added-rules-same-drl", "1.0.0");
@@ -322,8 +322,8 @@ public class KieSessionRulesIncrementalUpdateChangedRulesTest {
 	}
 
 	/**
-	 * Tests updating the KieBase changing the order of the constraints in the LHS. This will mark the rule as changed, and thus will refire
-	 * for events in the WM that match.
+	 * Tests updating the KieBase changing the order of the constraints in the LHS (note: changing order of constraints, not adding
+	 * constraints as in the previous tests). This will mark the rule as changed, and thus will refire for events in the WM that match.
 	 * 
 	 * @throws Exception
 	 */
