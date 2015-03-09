@@ -89,7 +89,7 @@ public class KieSessionRulesIncrementalUpdateAddedRulesTest {
 	public void testAddedRulesDifferentDrl() throws Exception {
 
 		KieServices kieServices = KieServices.Factory.get();
-		ReleaseId releaseId = kieServices.newReleaseId("org.kie", "test-added-rules-same-drl", "1.0.0");
+		ReleaseId releaseId = kieServices.newReleaseId("org.kie", "test-added-rules-different-drl", "1.0.0");
 
 		InternalKieModule kieModule = createKieJar(kieServices, releaseId, new KieTestUtils.ResourceWrapper(kieServices.getResources()
 				.newClassPathResource("originalRules/rules.drl"), "originalRules.drl"));

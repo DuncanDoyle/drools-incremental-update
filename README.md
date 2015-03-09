@@ -19,6 +19,15 @@ the purpose of the test and the expected semantics and outcome.
 To run the tests, execute `mvn clean test` in the root directory of the project.
 
 ## The incremental update semantics
+We will now explain the behaviour of the incremental update of rules in a running `KieSession`.
+
+### Adding rules
+* When a `KieBase` is changed by adding a new rule to an existing DRL file (e.g. not changing the name of the DRL), the existing rules will **not** refire for facts/events that are in the KieSession. The new rule however will fire for **all** facts/events that are already
+in the KieSession and that match the rule. E.g. if you have inserted 2 facts/events into the `KieSession`, and after that you add a rule that creates a match for both fatcs/events, the new rule will fire twice
+on the next call to `KieSession.fireAllRules()`. Existing rules will not re-fire.
+* When a 'KieBase' is changed by adding a new rule **and** changing the name of the DRL file, the existing rules **and** the new rules will (re)fire for all facts/evens in the KieSession (see this [test](drools-incremental-update/src/test/java/org/jboss/ddoyle/drools/demo/KieSessionRulesIncrementalUpdateAddedRulesTest.java#L89)). Drools will treat rules in a new DRL file as new rules, even if only the DRL file was renamed. This is 
+also demonstrated in [this test](drools-incremental-update/src/test/java/org/jboss/ddoyle/drools/demo/KieSessionRulesIncrementalUpdateDifferentDrlTest.java).
+
 
 
 
