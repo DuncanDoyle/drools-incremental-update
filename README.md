@@ -35,7 +35,11 @@ We will now explain the behaviour of the incremental update of rules in a runnin
 * When a rule is deleted, remaining rules will **not** (re)fire for facts/events that were already in Working Memory before the `KieSession` update, as demonstrated [here](drools-incremental-update/src/test/java/org/jboss/ddoyle/drools/demo/KieSessionRulesIncrementalUpdateDeletedRulesTest.java).
 ### Rules with accumulates
 * The [following tests](drools-incremental-update/src/test/java/org/jboss/ddoyle/drools/demo/KieSessionRulesIncrementalUpdateAccumulateTest.java) test KieBase and KieSession update semantics with rules containing accumulates. There are some interesting conclusions:
-** 
+** [This test](drools-incremental-update/src/test/java/org/jboss/ddoyle/drools/demo/KieSessionRulesIncrementalUpdateAccumulateTest.java#L34) shows that the rule is called 6 times, once when SimpleEvent-1 is inserted, twice when SimpleEvent-2 is inserted (once for SimpleEvent-1 and new Accumulate value and once for SimpleEvent-2 and new Accumulate Value) and 3 times when SimpleEvent-3 is inserted (once for SimpleEvent-1 and Accumulate value 3, once for SimpleEvent-2 and Accumulate value 3 and once for SimpleEvent-3 and Accumulate value 3).
+** [This test](drools-incremental-update/src/test/java/org/jboss/ddoyle/drools/demo/KieSessionRulesIncrementalUpdateAccumulateTest.java#L97) shows that when we rename the rule, although the rule is marked as a new rule, 
+the renamed rule is fired only 3 times and not 6 times. This is because the accumulate only creates a single new fact.
+** [This test](drools-incremental-update/src/test/java/org/jboss/ddoyle/drools/demo/KieSessionRulesIncrementalUpdateAccumulateTest.java#L164) shows a complex accumulate and tests how the accumulate memory is preserved during the update of a KieSession.
+** [This test](drools-incremental-update/src/test/java/org/jboss/ddoyle/drools/demo/KieSessionRulesIncrementalUpdateAccumulateTest.java#L226) shows that a renamed rule with only a single accumulate is, although a renamed rule is marked as a *new* rule, the renamed rule is only fired once, as the accumulate only generates a single new fact.
 
 ## Interesting links:
 * [The Drools project](http://www.drools.org)
