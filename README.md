@@ -33,7 +33,7 @@ We will now explain the behaviour of the incremental update of rules in a runnin
 * When a rule is changed bu changing the RHS of a rule, the rule is marked as *new* and the rule will refire for facts/events that were already in Working Memory before the `KieSession` was updated, as shown in [this test](drools-incremental-update/src/test/java/org/jboss/ddoyle/drools/demo/KieSessionRulesIncrementalUpdateChangedRulesTest.java#L272).
 
 ### Renaming Rules
-* When a rule is remamed, the rule is treated as a *new* rule and will thus refire for facts/events that were already in WorkingMemory before the update. This is tested [here](drools-incremental-update/src/test/java/org/jboss/ddoyle/drools/demo/KieSessionRulesIncrementalUpdateRenamedRulesTest.java).
+* When a rule is renamed, the rule is treated as a *new* rule and will thus refire for facts/events that were already in WorkingMemory before the update. This is tested [here](drools-incremental-update/src/test/java/org/jboss/ddoyle/drools/demo/KieSessionRulesIncrementalUpdateRenamedRulesTest.java).
 
 ### Deleting rules
 * When a rule is deleted, remaining rules will **not** (re)fire for facts/events that were already in Working Memory before the `KieSession` update, as demonstrated [here](drools-incremental-update/src/test/java/org/jboss/ddoyle/drools/demo/KieSessionRulesIncrementalUpdateDeletedRulesTest.java).
