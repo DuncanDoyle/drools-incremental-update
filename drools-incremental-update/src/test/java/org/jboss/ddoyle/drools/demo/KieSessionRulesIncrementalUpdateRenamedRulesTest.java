@@ -16,7 +16,7 @@ import org.kie.api.builder.ReleaseId;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 
-public class KieSessionsRulesIncrementalUpdateRenamedRulesTest {
+public class KieSessionRulesIncrementalUpdateRenamedRulesTest {
 
 	/**
 	 * Tests updating the KieBase by changing the name of rule one. This marks the rule as a new rule and will thus re-fire the first rule
