@@ -44,7 +44,7 @@ We will now explain the behaviour of the incremental update of rules in a runnin
     - [This test](drools-incremental-update/src/test/java/org/jboss/ddoyle/drools/demo/KieSessionRulesIncrementalUpdateAccumulateTest.java#L97) shows that when we rename the rule, although the rule is marked as a new rule, 
 the renamed rule is fired only 3 times and not 6 times. This is because the accumulate only creates a single new fact.
     - [This test](drools-incremental-update/src/test/java/org/jboss/ddoyle/drools/demo/KieSessionRulesIncrementalUpdateAccumulateTest.java#L164) shows a complex accumulate and tests how the accumulate memory is preserved during the update of a KieSession.
-    - [This test](drools-incremental-update/src/test/java/org/jboss/ddoyle/drools/demo/KieSessionRulesIncrementalUpdateAccumulateTest.java#L226) shows that a renamed rule with only a single accumulate is, although a renamed rule is marked as a *new* rule, the renamed rule is only fired once, as the accumulate only generates a single new fact.
+    - [This test](drools-incremental-update/src/test/java/org/jboss/ddoyle/drools/demo/KieSessionRulesIncrementalUpdateAccumulateTest.java#L226) shows that a renamed rule with only a single accumulate is, although a renamed rule is marked as a *new* rule, only fired once, as the accumulate only generates a single new fact.
 
 ## Interesting links:
 * [The Drools project](http://www.drools.org)
